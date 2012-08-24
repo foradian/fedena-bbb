@@ -1,0 +1,41 @@
+<div id="content-header">
+  <img src="/images/reminder/reminder_small.png" />
+  <h1><%= t('online_meetings') %></h1>
+  <h3><%= @room.name.capitalize %></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+<div id="page-yield"
+     <p id="notice"><%= flash[:notice] %></p>
+  <div class="meeting">
+    <%= t('meeting_name') %>  <span class="space">: <b><%=  @room.name.capitalize %></b></span> <br/>
+    <%= t('scheduled_on') %>  <span class="space1">: <b><%= @room.scheduled_on %></b></span> <br />
+    <br/>
+  </div>
+
+
+  <div id="back">
+    <table id="listing" align="center" width="100%" cellpadding="1" cellspacing="1">
+      <tr class="tr-head">
+        <td class="col-1"><%= t('sl_no') %></td>
+        <td class="col-2"><%= t('members') %></td>
+        <td class="col-3"><%= t('emp_no') %></td>
+        <td class="col-3"><%= t('dept_name') %></td>
+      </tr>
+      <tr class="tr-blank"></tr>
+      <% i=1 %>
+      <% @room.members.each do |user|%>
+        <tr class="tr-<%= cycle('odd', 'even') %>">
+          <% if user.admin? or user.employee? %>
+            <td class="col-1"><%= i %></td><td class="col-2"><%=  "#{user.full_name}"%></td><td class="col-3"><%="#{user.username}" %></td><td class="col-3"><%="#{user.employee_record.employee_department.name}"%></td>
+
+          <% else %>
+            <td class="col-1"><%= i %></td><td class="col-2"><%=  "#{user.first_name}"%></td><td class="col-3"><%= "#{user.username}"%></td><td class="col-3"><%="#{user.student_record.batch.full_name}"%></td>
+          <% end %>
+        </tr>
+        <% i=i+1 %>
+      <% end %>
+    </table>
+  </div>
+</div>

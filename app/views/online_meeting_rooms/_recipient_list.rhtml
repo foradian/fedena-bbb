@@ -1,0 +1,17 @@
+<% unless @recipients.blank? %>
+  <label id="label-member7"><%= t('members') %></label>
+  <div class ="scrolable-member" >
+    <% x = '<span> x </span>' %>
+    <div class="scroll-inside-member">
+      <% @recipients.each do |r|  %>
+        <div class="hover-member">
+          <%=  %> <%= link_to r.first_name + x, "#", :onClick => "remove_recipient(#{r.id}); return false", :class=> 'individual',
+            :before => "Element.show('loader')",
+            :success => "Element.hide('loader')" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <%= submit_tag "", :value => "#{t('save')}", :class => "submit_button" %>
+  <div class="extender"></div>
+<% end %>

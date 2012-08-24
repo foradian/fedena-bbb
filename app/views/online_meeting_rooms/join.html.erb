@@ -1,0 +1,39 @@
+<script type="text/javascript">
+  function ajax_request() {
+  new Ajax.Request('<%= running_online_meeting_room_url(:id=>@room, :format => 'json') %>',{
+  dataType: 'json',
+  onError: function(xhr_data) {
+  alert("BBB Server Error");
+  setTimeout(function() { ajax_request(); }, 10000);
+  },
+  onSuccess: function(xhr_data) {
+  xhr_data = xhr_data.responseText.evalJSON();
+  if (xhr_data.running == 'true') {
+  window.location.reload();
+  }
+  setTimeout("ajax_request()", 5000);
+  },
+  contentType: 'application/json'
+  });
+  }
+
+  document.observe("dom:loaded", function() {
+  ajax_request();
+  });
+</script>
+<div id="content-header">
+  <img src="/images/examination/show_exam.png" alt="Exam" />
+  <h1><%= t('online_meetings') %></h1>
+  <h3><%= t('meeting_not_started') %></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+<div id="page-yield">
+  <h1 class="title"><%= t('meeting') %> - <%= @room.name %><%= image_tag "loader.gif",:class=>'loader-img' %></h1>
+
+  <div id="news_content">
+    <p><%= t('meeting_info') %></p>
+  </div>
+</div>
+

@@ -1,0 +1,47 @@
+<% @server.meetings.each do |room| %>
+  <div class="bbbrails_meeting_description">
+    <div class="title_bar">
+      <% unless room.new_record? %>
+        <div class="button_bar">
+          <%= link_to "#{t('show')}", online_meeting_room_path(room) %>
+          <%= link_to "#{t('edit_text')}", edit_online_meeting_room_path(room) %>
+          <%= link_to "#{t('destroy')}", online_meeting_room_path(room), :confirm => "#{t('delete_confirm_msg')}", :method => :delete %>
+        </div>
+        <div class="button_bar">
+          <%= link_to "#{t('join')}", join_online_meeting_room_path( room) %>
+          <%= link_to "#{t('end')}", end_online_meeting_room_path( room), :confirm => "#{t('delete_confirm_msg')}" %>
+        </div>
+      <% end %>
+      <b><%= room.name %></b> (<%= t('id') %>: <%= room.meetingid %>) -
+      <% if room.is_running? %>
+        <span class="running"><%= t('running') %>!</span>
+      <% else %>
+        <span class="not_running"><%= t('not_running') %></span>
+      <% end %>
+    </div>
+    <% unless room.start_time.nil? %>
+      <%= t('started_at') %>: <%= room.start_time.strftime("%F, %R UTC%z") %><br/>
+    <% end %>
+    <% unless room.end_time.nil? %>
+      <%= t('ended_at') %>: <%= room.end_time.strftime("%F, %R UTC%z") %> (<%= t('forcibly_ended') %>: <%= room.has_been_forcibly_ended %>)
+    <% end %>
+    <% unless room.attendees.count == 0 %>
+      <%= t('participants') %> (<%= room.participant_count %> <%= t('total') %>, <%= room.moderator_count %><%= t('moderators') %> ):
+      <div class="bbbrails_meeting_attendees">
+        <div class="header">
+          <div class="field"><%= t('role') %></div>
+          <div class="field"><%= t('id') %></div>
+          <div class="field"><%= t('name') %></div>
+        </div>
+        <% room.attendees.each do |attendee| %>
+          <div class="row">
+            <div class="field"><%= attendee.role %></div>
+            <div class="field"><%= attendee.user_id %></div>
+            <div class="field"><%= attendee.full_name %></div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <div style="clear:both;"></div>
+  </div>
+<% end %>

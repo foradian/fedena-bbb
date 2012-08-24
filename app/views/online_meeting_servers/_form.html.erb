@@ -1,0 +1,22 @@
+<% url = @server.new_record? ? "create" : "update" %>
+<div id="form-content">
+  <%  form_for(@server,:url=>{:action=>url}) do |f| %>
+
+    <%= error_messages_for :server %>
+    <div class="label-field-pair">
+      <label for="category_name"><%= t('name') %>  </label>
+      <%= f.text_field :name %>
+    </div>
+    <div class="label-field-pair">
+      <label for="category_name"><%= t('url_text') %>  </label>
+      <%= f.text_field :url %>
+    </div>
+   <div class="label-field-pair">
+     <label for="category_name"><%= t('salt') %>  </label>
+      <%= f.text_field :salt %>
+    </div>
+    <div id="submit-button">
+      <%= f.submit "#{t('save_changes')}" %>
+    </div>
+  <% end %>
+</div>

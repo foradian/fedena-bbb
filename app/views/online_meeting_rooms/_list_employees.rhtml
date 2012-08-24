@@ -1,0 +1,4 @@
+<label for="select_employees"><%= t('batch') %></label>
+      <div class="text-input-bg" >
+ <%= select :select_employees, :id, @employees.map{|c| [c.full_name,c.id]},{:prompt=>"#{t('select_employees')}"} %>
+      </div>

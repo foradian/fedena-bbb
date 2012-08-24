@@ -1,0 +1,39 @@
+<% if @rooms.present? %>
+  <div id="flash_box"></div>
+  <% unless flash[:notices].nil? %>
+    <p class="flash-msg"> <%= flash[:notices] %> </p>
+  <% end %>
+  <table id="listing" width="100%">
+    <tr class="tr-head">
+      <td><%= t('name') %></td>
+      <td><%= t('created_by') %></td>
+      <td><%= t('scheduled_on') %></td>
+      <td><%= t('actions') %></td>
+    </tr>
+    <% @rooms.each do |room| %>
+      <tr class="tr-<%= cycle('odd', 'even') %>">
+        <td class="col-1">
+          <%= link_to room.name, online_meeting_room_path(:id=>room) %>
+        </td>
+        <td class="col-2">
+          <%= room.user.full_name %>
+        </td>
+        <td class="col-4">
+          <%= room.scheduled_on %>
+        </td>
+        <td class="col-2">
+          <small>
+            <%= link_to "#{t('join')}", join_online_meeting_room_path(:id=>room) %>
+            <% if room.user_id == @current_user.id %>
+              | <%= link_to "#{t('end')}", end_meeting_online_meeting_room_path(:id=>room), :confirm => "#{t('delete_confirm_msg')}" %> |
+              <%= link_to "#{t('edit_text')}", edit_online_meeting_room_path(:id=>room)  %> |
+              <%= link_to("#{t('delete_text')}", online_meeting_room_path(:id=>room), :method => 'delete', :confirm => "#{t('delete_confirm_msg')}") %>
+            <% end %>
+          </small>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+    <div class="flash"><%= t('no_meeting_for_selected_date') %></div>
+<% end %>

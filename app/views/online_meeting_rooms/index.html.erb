@@ -1,0 +1,51 @@
+<div id="content-header">
+  <img src="/images/examination/show_exam.png" alt="Exam" />
+  <h1><%= t('online_meetings') %></h1>
+  <h3><%= t('all') %></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+<div id="inner-tab-menu">
+  <ul>
+    <% if permitted_to? :new,:online_meeting_rooms %>
+      <li><%= link_to "#{t('new_text')}", new_online_meeting_room_path %> </li>
+    <% end %>
+    <% if permitted_to? :index,:online_meeting_servers %>
+      <li><%= link_to "#{t('servers')}", online_meeting_servers_path %> </li>
+    <% end %>
+  </ul>
+</div>
+<div id="page-yield">
+
+  <% unless flash[:notice].nil? %>
+    <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+  <div id="top-box">
+    <div id="activities">
+      <%= render :partial=>"date_show" %>
+    </div>
+
+    <div class="search-box">
+      <% remote_form_for :meetings ,:url=>{:action=>'view_meetings_by_date'},:loading => "$('loading').show();", :loaded => "$('loading').hide();" do |f| %>
+        <label class="select-date"><%= t('select_date') %></label>
+        <div class="text-input-bg"><%= calendar_date_select_tag 'meetings[search_date]', I18n.l(@date,:format=>:default), :time => false,:readonly=>true,:popup=>"force"  %></div>
+        <div class="go"><%= submit_tag "#{t('go')}", :class=>"submit_button" %></div>
+      <% end %>
+    </div>
+    <div id="img_load">
+      <%= image_tag("loader.gif",
+        :align => "absmiddle",
+        :border => 0,
+        :id => "loading",
+        :style =>"display: none;" ) %>
+    </div>
+  </div>
+  <div class="box">
+    <div id="event-table">
+      <%= render :partial=>"meetings" %>
+    </div>
+    <div class="extender"></div>
+  </div>
+
+</div>

@@ -1,0 +1,39 @@
+<div id="content-header">
+  <img src="/images/examination/show_exam.png" alt="Exam" />
+  <h1> <%= t('OnlineMeetingServer') %></h1>
+  <h3><%= t('show') %></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+<div id="inner-tab-menu">
+  <ul>
+    <li><%= link_to "#{t('edit_text')}", edit_online_meeting_server_path(:id=>@server) %></li>
+    <li><%= link_to "#{t('new_server')}", new_online_meeting_room_path() %></li>
+  </ul>
+</div>
+<div id="page-yield">
+
+  <p id="notice"><%= flash[:notice] %></p>
+  <table id="listing" align="center" width="100%" cellpadding="1" cellspacing="1">
+
+    <tr class="tr-head">
+      <td class="col-1"><%= OnlineMeetingServer.human_attribute_name(:name) %></td>
+      <td class="col-1">
+        <%= OnlineMeetingServer.human_attribute_name(:url) %>
+      </td>
+      <td class="col-1">
+        <%= OnlineMeetingServer.human_attribute_name(:salt) %>
+      </td>
+    </tr>
+    <tr class="tr-blank"></tr>
+
+    <tr class="tr-read-<%= cycle('odd', 'even') %>">
+      <td class="col-1"><%= @server.name %></td>
+      <td class="col-1"> <%= @server.url %></td>
+      <td class="col-1"><%= @server.salt %></td>
+    </tr>
+
+  </table>
+
+</div>

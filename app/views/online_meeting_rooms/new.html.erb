@@ -1,0 +1,16 @@
+<div id="content-header">
+  <img src="/images/reminder/reminder_small.png" />
+  <h1><%= t('online_meetings') %></h1>
+  <h3><%= t('create_meeting') %></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+<div id="page-yield">
+  <% unless flash[:notice].nil? %>
+    <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+  <%= render :partial => "form" %>
+</div>
+
+
