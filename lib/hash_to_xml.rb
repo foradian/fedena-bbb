@@ -1,3 +1,4 @@
+
 class Hash
   class << self
     def from_xml(xml_io)

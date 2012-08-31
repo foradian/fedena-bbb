@@ -1,3 +1,4 @@
+
 # Used to store the attendees of a meeting as returned by BigBlueButton in
 # <tt>get_meeting_info</tt>.
 class BigbluebuttonAttendee
